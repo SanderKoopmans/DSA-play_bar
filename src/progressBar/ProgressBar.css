@@ -1,6 +1,7 @@
 .bar-container {
   position: relative;
   color: black;
+  height: 100px;
 }
 
 .bar {
@@ -9,4 +10,16 @@
   height: 5px;
   position: absolute;
   bottom: 10px;
+}
+
+.bar-bottom {
+  display: flex;
+  justify-content: center;
+}
+
+.progress-container {
+  width: 750px;
+  height: 5px;
+  background-color: gray;
+  margin-top: 20px;
 }

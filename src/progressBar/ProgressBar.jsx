@@ -10,11 +10,6 @@ const initialState = {
 const reducer = (state, action) => {
   console.log('reducer', action, state.currentTime);
   switch(action.type) {
-    case 'ADD_SONG': 
-      return {
-        ...state,
-        currentSong: action.song
-      }
     case 'SET_CURRENT_TIME': 
     if (state.currentTime + 1 > state.duration) {
       return {
@@ -27,6 +22,13 @@ const reducer = (state, action) => {
         currentTime: state.currentTime + 1
       }
     case 'PLAY':
+      if (state.currentTime === state.duration) {
+        return {
+          ...state,
+          currentTime: 0,
+          playing: true
+        }
+      }
       return {
         ...state,
         playing: true
@@ -52,6 +54,16 @@ const ProgressBar = () => {
 
   const handleProgress = (currentTime, duration) => 750 * (currentTime / duration);
 
+  const showDragTarget = () => {
+    const target = document.getElementById('drag-target');
+    target.classList.add('target-sphere');
+  }
+
+  const hideDragTarget = () => {
+    const target = document.getElementById('drag-target');
+    target.classList.remove('target-sphere');
+  }
+
   useEffect(() => {
     let timer;
     if (state.playing) {
@@ -74,13 +86,22 @@ const ProgressBar = () => {
         : <button onClick={() => dispatch({ type: 'PLAY' })}>Play</button>}
       </div>
       <div className="bar-bottom">
-        <div className="progress-container">
+        <div
+          className="progress-container"
+          onMouseEnter={() => showDragTarget()}
+          onMouseLeave={() => hideDragTarget()}
+        >
           <div
-          className="bar"
-          style={{
-            width: handleProgress(state.currentTime, state.duration)
-          }}
-          />
+            className="bar"
+            style={{
+              width: handleProgress(state.currentTime, state.duration)
+            }}
+          >
+            <span
+              id="drag-target"
+              draggable={true}
+            />
+          </div>
         </div>
         <div className="progress-duration">{state.duration}</div>
       </div>

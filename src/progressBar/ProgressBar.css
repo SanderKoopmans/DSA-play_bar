@@ -15,6 +15,7 @@
 .bar-bottom {
   display: flex;
   justify-content: center;
+  align-items: center;
 }
 
 .progress-container {
@@ -22,4 +23,8 @@
   height: 5px;
   background-color: gray;
   margin-top: 20px;
+}
+
+.progress-duration {
+  margin-left: 10px;
 }
